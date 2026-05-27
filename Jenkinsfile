@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'
+        nodejs 'NodeJs'
     }
 
     stages {
@@ -10,7 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/kinleyp06/todo-app.git'
+                credentialsId: 'github-creds',
+                url: 'https://github.com/kinleyp06/Kinley-Pem_02250354_DSO101_A1.git'
             }
         }
 
