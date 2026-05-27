@@ -17,7 +17,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir('backend') {
+                dir('todo-app/backend') {
                     bat 'npm install'
                 }
             }
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                dir('backend') {
+                dir('todo-app/backend') {
                     bat 'npm test'
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t kinleyp06/be-todo:latest ./backend'
+                bat 'docker build -t kinleyp06/be-todo:latest ./todo-app/backend'
             }
         }
 
