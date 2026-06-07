@@ -263,25 +263,6 @@ services:
 
 ---
 
-## Commands Summary
-
-```bash
-# Development
-npm run dev          # Start dev server
-
-# Docker
-docker build -t name:tag .     # Build image
-docker push name:tag           # Push to registry
-docker images                  # List images
-
-# Git
-git add .
-git commit -m "message"
-git push origin main
-```
-
----
-
 ## Conclusion
 
 - Built working To-Do app with React + Node.js  
@@ -296,4 +277,20 @@ git push origin main
 - Environment variables keep secrets safe
 - CI/CD automates the deployment pipeline
 - Render simplifies cloud deployment
+
+---
+ 
+## What I Learned
+ 
+This assignment helped me understand many important DevOps and deployment concepts:
+ 
+- How frontend and backend applications communicate
+- How REST APIs work
+- PostgreSQL database integration
+- Docker containerization
+- Docker Hub image management
+- Cloud deployment using Render.com
+- Environment variable management
+- Troubleshooting deployment and database issues
+---
 
