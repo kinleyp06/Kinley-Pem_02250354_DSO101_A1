@@ -35,35 +35,59 @@ My To-Do app has a React frontend, a Node.js/Express backend, and a PostgreSQL d
 
 **Installing Jenkins**
 
-I downloaded Jenkins 2.555.2 from jenkins.io and ran the installer on Windows. The setup wizard asked me to choose an install location — I kept it as the default `C:\Program Files\Jenkins\`. For the service logon, I selected "Run as LocalSystem". I set the port to `8080` and tested it to make sure it was free. For the Java path, it automatically detected my JDK at `C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot\`. I kept the "Start Service" option selected and finished the install.
+I downloaded Jenkins 2.555.2 from jenkins.io and ran the installer on Windows. The setup wizard asked me to choose an install location — I kept it as the default `C:\Program Files\Jenkins\`.
+
+![Destination Folder](Assets/j1.png)
+
+For the service logon, I selected "Run as LocalSystem".
+
+![Service Logon Credentials](Assets/j2.png)
+
+I set the port to `8080` and tested it to make sure it was free.
+
+![Port Selection](Assets/j3.png)
+
+For the Java path, it automatically detected my JDK at `C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot\`.
+
+![Java Home Directory](Assets/j4.png)
+
+I kept the "Start Service" option selected and finished the install.
+
+![Custom Setup](Assets/j5.png)
 
 **Unlocking Jenkins**
 
-When I opened `localhost:8080` for the first time, it showed the Unlock Jenkins page. It told me to find the initial admin password at:
+When I opened `localhost:8080` for the first time, it showed the Unlock Jenkins page. It told me to find the initial admin password at `C:\ProgramData\Jenkins\.jenkins\secrets\initialAdminPassword`.
 
-```
-C:\ProgramData\Jenkins\.jenkins\secrets\initialAdminPassword
-```
+I searched for that path using the Windows search bar, opened the file, and copied the password.
 
-I searched for that path using the Windows search bar, opened the file, copied the password, and pasted it into the browser. After that, it took me to the plugin installation page where I clicked **Install suggested plugins** and waited for everything to finish downloading.
+![Searching for initialAdminPassword](Assets/j8.png)
+
+Then I pasted it into the browser.
+
+![Unlock Jenkins – password entered](Assets/j10.png)
+
+**Installing Suggested Plugins**
+
+After unlocking, it took me to the plugin installation page where I clicked **Install suggested plugins**.
+
+![Customize Jenkins](Assets/j11.png)
 
 **Creating Admin User**
 
-Once plugins were done, I filled in the Create First Admin User form:
+Once plugins were done, I filled in the Create First Admin User form.
 
-- Username: `kinleypem`
-- Full Name: `Kinley Pem`
-- Email: `02250354.cst@rub.edu.bt`
+![Create First Admin User](Assets/j13.png)
 
-I kept the Jenkins URL as `http://localhost:8080/` and clicked finish.
+I kept the Jenkins URL as `http://localhost:8080/`.
+
+![Instance Configuration](Assets/j14.png)
 
 **Installing the NodeJS Plugin**
 
-I went to **Manage Jenkins > Plugins > Available plugins**, searched for `NodeJS`, checked it, and clicked Install. This was needed so Jenkins could run `npm` commands inside the pipeline.
+I went to **Manage Jenkins > Plugins > Available plugins**, searched for `NodeJS`, checked it, and clicked Install.
 
-**Configuring NodeJS in Tools**
-
-I went to **Manage Jenkins > Tools** and added a NodeJS installation. I named it exactly `NodeJS` because that's what I referenced in the Jenkinsfile. I enabled automatic installation so Jenkins would download it on its own.
+![NodeJS Plugin](Assets/j15.png)
 
 ---
 
@@ -87,7 +111,7 @@ Kinley-Pem_02250354_DSO101_A1/
 
 **Generating a Personal Access Token**
 
-I went to GitHub > Settings > Developer Settings > Personal Access Tokens and created a new token with `repo` and `admin:repo_hook` permissions. I copied the token right away since GitHub only shows it once.
+I went to GitHub > Settings > Developer Settings > Personal Access Tokens and created a new token with `repo` and `admin:repo_hook` permissions.
 
 **Adding Credentials to Jenkins**
 
@@ -102,7 +126,11 @@ I went to **Manage Jenkins > Credentials > Add Credentials** and entered:
 
 ### Task 3: Writing the Jenkinsfile
 
-I created a `Jenkinsfile` in the root of my repository. Since I'm on Windows, I used `bat` instead of `sh` for the shell commands. The pipeline has five stages:
+I created a `Jenkinsfile` in the root of my repository. Since I'm on Windows, I used `bat` instead of `sh` for the shell commands.
+
+![Jenkinsfile in VS Code](Assets/j16.png)
+
+The pipeline has five stages:
 
 ```groovy
 pipeline {
@@ -179,13 +207,12 @@ Then I updated `package.json` to include the test script:
 I created a new Pipeline job in Jenkins:
 
 1. Clicked **New Item**, gave it the name `todo-app-pipeline`, selected **Pipeline**, and clicked OK
-2. Scrolled down to the Pipeline section and set:
-   - Definition: **Pipeline script from SCM**
-   - SCM: **Git**
-   - Repository URL: `https://github.com/kinleyp06/Kinley-Pem_02250354_DSO101_A1.git`
-   - Credentials: **github-creds**
-   - Branch Specifier: `*/main`
-   - Script Path: `Jenkinsfile`
+2. Scrolled down to the Pipeline section and configured the SCM settings:
+
+![Pipeline Configuration – Repository URL](Assets/j17.png)
+
+![Pipeline Configuration – Branch and Script Path](Assets/j18.png)
+
 3. Clicked **Save** then **Build Now**
 
 ---
@@ -210,8 +237,6 @@ After fixing a few issues (explained below), the pipeline ran successfully throu
 ---
 
 ## Challenges Faced
-
-Honestly, this assignment had quite a few problems along the way.
 
 **NodeJS name mismatch** – My Jenkinsfile said `nodejs 'NodeJS'` but I had named the tool something slightly different in Jenkins Tools. The pipeline kept failing at the start. I fixed it by making sure the name in Tools matched exactly.
 
